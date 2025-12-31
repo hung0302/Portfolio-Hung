@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Looking For More - Hoàng Việt Hưng</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Cấu hình Tailwind -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "brand-orange": "#F58220",
+              "brand-orange-dark": "#E06A00",
+              "bg-beige": "#FFF1E5",
+            },
+            fontFamily: {
+              sans: ["Montserrat", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+              chat: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- CSS Custom -->
+    <style>
+      /* --- PORTFOLIO STYLES --- */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Animation xoay vòng tròn */
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Hiệu ứng reveal khi cuộn trang */
+      .reveal-section {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 1s ease-out;
+      }
+      .reveal-section.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Hiệu ứng nổi cho icon */
+      .tech-orbit-icon {
+        animation: float 3s ease-in-out infinite;
+      }
+      .tech-orbit-icon.delay-1 {
+        animation-delay: 1s;
+      }
+      .tech-orbit-icon.delay-2 {
+        animation-delay: 2s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      /* Card Hover Effect for Blog/Youtube */
+      .content-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .content-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body class="bg-white text-gray-800 antialiased flex flex-col min-h-screen">
+    <!-- 1. Top Navigation -->
+    <nav
+      class="bg-black text-white text-xs md:text-sm py-4 sticky top-0 z-50 shadow-md"
+    >
+      <div
+        class="container mx-auto px-4 flex justify-between md:justify-center items-center gap-6 md:gap-14 overflow-x-auto md:overflow-visible whitespace-nowrap scrollbar-hide"
+      >
+        <a
+          href="index.html"
+          class="nav-link hover:text-brand-orange transition flex items-center gap-2 font-medium"
+        >
+          <i class="fas fa-home"></i> HOME
+        </a>
+
+        <div class="relative group">
+          <a
+            href="#projects"
+            class="nav-link group-hover:text-brand-orange transition font-medium flex items-center cursor-pointer py-2"
+          >
+            MY PROJECTS
+            <i
+              class="fas fa-chevron-down text-[10px] ml-1 group-hover:rotate-180 transition-transform duration-300"
+            ></i>
+          </a>
+          <!-- Dropdown Menu -->
+          <div
+            class="absolute left-0 mt-0 w-48 bg-black border border-gray-800 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top group-hover:translate-y-0 translate-y-2 z-50 rounded-b-md"
+          >
+            <a
+              href="project_data.html"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 border-b border-gray-900 transition text-xs md:text-sm"
+              >DATA ANALYST</a
+            >
+            <a
+              href="project_automation.html"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 border-b border-gray-900 transition text-xs md:text-sm"
+              >AUTOMATION</a
+            >
+            <a
+              href="https://drive.google.com/drive/u/0/folders/1xR6uWmjnVua4akJRp3AfR-cG0UY9Okv9"
+              target="_blank"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 transition text-xs md:text-sm"
+              >OTHERS</a
+            >
+          </div>
+        </div>
+
+        <a
+          href="certificate.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >MY CERTIFICATIONS</a
+        >
+        <a
+          href="My_journey.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >MY JOURNEY</a
+        >
+        <a
+          href="Bookingme.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >BOOKING ME</a
+        >
+        <!-- Active State for Current Page -->
+        <a href="#" class="nav-link text-brand-orange font-bold transition"
+          >LOOKING FOR MORE!</a
+        >
+      </div>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <main class="flex-grow pb-16">
+      <!-- 2. Hero Header for "Looking for More" -->
+      <section class="bg-bg-beige py-16 md:py-24 reveal-section">
+        <div class="container mx-auto px-4 text-center">
+          <h1
+            class="text-4xl md:text-6xl font-serif font-bold uppercase text-gray-900 mb-4"
+          >
+            Beyond The <span class="text-brand-orange">CV</span>
+          </h1>
+          <p class="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">
+            Nơi tôi chia sẻ những góc nhìn cá nhân, sở thích và những nội dung
+            sáng tạo khác ngoài công việc chuyên môn.
+          </p>
+          <div class="mt-8">
+            <i
+              class="fas fa-chevron-down text-3xl text-brand-orange animate-bounce"
+            ></i>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. MY BLOGS Section (CENTERED & REMOVED VISUAL CARD) -->
+      <section class="py-20 bg-white relative overflow-hidden reveal-section">
+        <!-- Background Decoration -->
+        <div
+          class="absolute top-10 left-10 opacity-10 pointer-events-none tech-orbit-icon"
+        >
+          <i class="fas fa-feather-alt text-8xl text-brand-orange"></i>
+        </div>
+        <div
+          class="absolute bottom-10 right-10 opacity-10 pointer-events-none tech-orbit-icon delay-2"
+        >
+          <i class="fas fa-book-open text-8xl text-gray-800"></i>
+        </div>
+
+        <div class="container mx-auto px-4 relative z-10">
+          <!-- Wrapper for Center Alignment -->
+          <div class="max-w-4xl mx-auto text-center">
+            <div class="flex items-center justify-center gap-4 mb-4">
+              <span class="w-12 h-1 bg-brand-orange"></span>
+              <span
+                class="uppercase tracking-widest text-sm font-bold text-gray-500"
+                >My Perspectives</span
+              >
+              <span class="w-12 h-1 bg-brand-orange"></span>
+            </div>
+
+            <h2
+              class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6"
+            >
+              My Blogs & <span class="text-brand-orange">Stories</span>
+            </h2>
+
+            <p
+              class="text-gray-600 text-lg leading-relaxed mb-8 mx-auto max-w-2xl"
+            >
+              Viết lách là cách tôi hệ thống hóa tư duy và chia sẻ những bài học
+              từ hành trình của mình. Tại đây, bạn sẽ tìm thấy những bài viết về
+              kỹ thuật, những chiêm nghiệm cuộc sống và cả những câu chuyện thú
+              vị khác.
+            </p>
+
+            <!-- Topic Pills -->
+            <div class="flex flex-wrap justify-center gap-3 mb-8">
+              <span
+                class="px-4 py-2 bg-gray-100 rounded-full text-sm font-medium hover:bg-brand-orange hover:text-white transition cursor-default"
+                >#Data</span
+              >
+              <span
+                class="px-4 py-2 bg-gray-100 rounded-full text-sm font-medium hover:bg-brand-orange hover:text-white transition cursor-default"
+                >#AI</span
+              >
+              <span
+                class="px-4 py-2 bg-gray-100 rounded-full text-sm font-medium hover:bg-brand-orange hover:text-white transition cursor-default"
+                >#StudentLife</span
+              >
+            </div>
+
+            <!-- BUTTON MỞ MODAL -->
+            <button
+              onclick="showNotification()"
+              class="inline-flex items-center gap-3 bg-black text-white px-8 py-4 rounded-full font-bold hover:bg-brand-orange transition transform hover:translate-x-2 cursor-pointer"
+            >
+              READ MY BLOGS <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. YOUTUBE Section -->
+      <section class="py-20 bg-black text-white reveal-section">
+        <div class="container mx-auto px-4">
+          <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4">
+              On The <span class="text-red-600">Tube</span>
+            </h2>
+            <p class="text-gray-400 text-lg">
+              Chia sẻ kiến thức qua Video & Tutorials
+            </p>
+          </div>
+
+          <div class="relative w-full max-w-4xl mx-auto group cursor-pointer">
+            <!-- Decorate TV Frame -->
+            <div
+              class="absolute -inset-1 bg-gradient-to-r from-red-600 to-brand-orange rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-500"
+            ></div>
+
+            <div
+              class="relative bg-gray-900 rounded-2xl border border-gray-800 overflow-hidden aspect-video flex flex-col items-center justify-center"
+            >
+              <!-- Youtube Icon / Placeholder content -->
+              <div
+                class="text-center z-10 transform group-hover:scale-110 transition duration-300"
+              >
+                <i
+                  class="fab fa-youtube text-7xl md:text-9xl text-red-600 mb-4 drop-shadow-2xl"
+                ></i>
+                <h3 class="text-2xl font-bold">HƯNG DATA CHANNEL</h3>
+                <p class="text-gray-400 mt-2">
+                  Click to watch my latest videos
+                </p>
+              </div>
+
+              <!-- Grid Background -->
+              <div
+                class="absolute inset-0 opacity-10"
+                style="
+                  background-image: radial-gradient(
+                    #ffffff 1px,
+                    transparent 1px
+                  );
+                  background-size: 20px 20px;
+                "
+              ></div>
+            </div>
+
+            <!-- Floating Action Button positioned absolute -->
+            <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
+              <a
+                href="https://www.youtube.com/channel/UC6hKjokAjcGRcy7mvFTbpew"
+                target="_blank"
+                class="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-full font-bold shadow-lg transition hover:-translate-y-1"
+              >
+                <i class="fas fa-play"></i> VISIT CHANNEL
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- NOT AVAILABLE MODAL -->
+    <div
+      id="notificationModal"
+      class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 opacity-0 pointer-events-none transition-opacity duration-300 backdrop-blur-sm"
+    >
+      <div
+        class="bg-white p-8 rounded-2xl shadow-2xl max-w-sm w-[90%] text-center transform scale-90 transition-transform duration-300 border border-gray-100"
+        id="modalContent"
+      >
+        <div
+          class="w-16 h-16 bg-bg-beige rounded-full flex items-center justify-center mx-auto mb-4"
+        >
+          <i class="fas fa-tools text-2xl text-brand-orange animate-pulse"></i>
+        </div>
+        <h3 class="text-2xl font-serif font-bold mb-2 text-gray-900">
+          Not Available Yet
+        </h3>
+        <p class="text-gray-600 mb-8 leading-relaxed">
+          Tính năng này đang được phát triển để mang lại trải nghiệm tốt nhất.
+          Vui lòng quay lại sau nhé!
+        </p>
+        <button
+          onclick="closeModal()"
+          class="bg-black text-white px-8 py-3 rounded-full font-bold hover:bg-brand-orange transition transform hover:scale-105 active:scale-95"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+
+    <!-- Script Logic -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // --- PORTFOLIO LOGIC ---
+        // Scroll Reveal Logic
+        const reveals = document.querySelectorAll(".reveal-section");
+
+        const revealOnScroll = () => {
+          const windowHeight = window.innerHeight;
+          const elementVisible = 150;
+
+          reveals.forEach((reveal) => {
+            const elementTop = reveal.getBoundingClientRect().top;
+            if (elementTop < windowHeight - elementVisible) {
+              reveal.classList.add("active");
+            }
+          });
+        };
+
+        window.addEventListener("scroll", revealOnScroll);
+        revealOnScroll(); // Trigger once on load
+
+        // Xử lý Smooth Scroll cho các link neo
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute("href");
+            if (targetId === "#") return;
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: "smooth" });
+            }
+          });
+        });
+      });
+
+      // --- MODAL LOGIC ---
+      const modal = document.getElementById("notificationModal");
+      const modalContent = document.getElementById("modalContent");
+
+      function showNotification() {
+        modal.classList.remove("opacity-0", "pointer-events-none");
+        modalContent.classList.remove("scale-90");
+        modalContent.classList.add("scale-100");
+      }
+
+      function closeModal() {
+        modal.classList.add("opacity-0", "pointer-events-none");
+        modalContent.classList.remove("scale-100");
+        modalContent.classList.add("scale-90");
+      }
+
+      // Đóng modal khi click ra ngoài
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      // Đóng modal khi nhấn ESC
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !modal.classList.contains("opacity-0")) {
+          closeModal();
+        }
+      });
+    </script>
+  </body>
+</html>

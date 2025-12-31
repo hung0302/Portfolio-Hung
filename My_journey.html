@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hoàng Việt Hưng - Portfolio</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Cấu hình Tailwind -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "brand-orange": "#F58220",
+              "brand-orange-dark": "#E06A00",
+              "bg-beige": "#FFF1E5",
+            },
+            fontFamily: {
+              sans: ["Montserrat", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- CSS Custom -->
+    <style>
+      :root {
+        --bg-color: #000;
+      }
+
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--bg-color);
+        font-family: "Montserrat", sans-serif;
+        /* Flexbox để chia dọc trang web: Nav ở trên, Gallery ở dưới */
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* --- Gallery Styles --- */
+      #gallery-container {
+        position: relative;
+        width: 100%;
+        /* flex: 1 để chiếm hết không gian còn lại */
+        flex: 1;
+        /* QUAN TRỌNG: Cho phép cuộn dọc nếu ảnh dài hơn màn hình */
+        overflow-y: auto;
+        overflow-x: hidden;
+        /* Scroll mượt */
+        scroll-behavior: smooth;
+      }
+
+      /* Tùy chỉnh thanh cuộn cho gallery đẹp hơn */
+      #gallery-container::-webkit-scrollbar {
+        width: 8px;
+      }
+      #gallery-container::-webkit-scrollbar-track {
+        background: #1a1a1a;
+      }
+      #gallery-container::-webkit-scrollbar-thumb {
+        background: #f58220; /* Màu cam thương hiệu */
+        border-radius: 4px;
+      }
+      #gallery-container::-webkit-scrollbar-thumb:hover {
+        background: #e06a00;
+      }
+
+      .loader {
+        position: fixed; /* Để loader luôn ở giữa màn hình kể cả khi cuộn */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: #f58220;
+        animation: spin 1s ease-in-out infinite;
+        z-index: 50;
+        display: none;
+        pointer-events: none;
+      }
+
+      /* --- Utility Styles --- */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body class="text-gray-800 antialiased bg-black">
+    <!-- 1. Top Navigation -->
+    <nav
+      class="bg-black text-white text-xs md:text-sm py-4 z-50 shadow-md flex-shrink-0 border-b border-gray-900"
+    >
+      <div
+        class="container mx-auto px-4 flex justify-between md:justify-center items-center gap-6 md:gap-14 overflow-x-auto md:overflow-visible whitespace-nowrap scrollbar-hide"
+      >
+        <a
+          href="index.html"
+          class="nav-link hover:text-brand-orange transition flex items-center gap-2 font-medium"
+          ><i class="fas fa-home"></i> HOME</a
+        >
+
+        <div class="relative group">
+          <a
+            href="#projects"
+            class="nav-link group-hover:text-brand-orange transition font-medium flex items-center cursor-pointer py-2"
+          >
+            MY PROJECTS
+            <i
+              class="fas fa-chevron-down text-[10px] ml-1 group-hover:rotate-180 transition-transform duration-300"
+            ></i>
+          </a>
+
+          <!-- Dropdown Menu -->
+          <div
+            class="absolute left-0 mt-0 w-48 bg-black border border-gray-800 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top group-hover:translate-y-0 translate-y-2 z-50 rounded-b-md"
+          >
+            <a
+              href="project_data.html"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 border-b border-gray-900 transition text-xs md:text-sm"
+              >DATA ANALYST</a
+            >
+            <a
+              href="project_automation.html"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 border-b border-gray-900 transition text-xs md:text-sm"
+              >AUTOMATION</a
+            >
+            <a
+              href="https://drive.google.com/drive/u/0/folders/1xR6uWmjnVua4akJRp3AfR-cG0UY9Okv9"
+              target="_blank"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 transition text-xs md:text-sm"
+              >OTHERS</a
+            >
+          </div>
+        </div>
+
+        <a
+          href="certificate.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >MY CERTIFICATIONS</a
+        >
+        <a
+          href="#journey"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >MY JOURNEY</a
+        >
+        <a
+          href="Bookingme.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >BOOKING ME</a
+        >
+        <a
+          href="Looking_fore_more.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >LOOKING FOR MORE!</a
+        >
+      </div>
+    </nav>
+
+    <!-- Gallery Container -->
+    <div id="gallery-container" class="bg-neutral-900">
+      <div class="loader" id="loader"></div>
+
+      <!-- Sử dụng thẻ IMG thay vì background-image -->
+      <!-- w-full: Chiếm hết chiều ngang -->
+      <!-- h-auto: Chiều cao tự động theo tỷ lệ ảnh gốc (có thể dài hơn màn hình) -->
+      <!-- block: Loại bỏ khoảng trắng thừa của inline element -->
+      <img
+        id="main-image"
+        src=""
+        alt="Portfolio Design"
+        class="w-full h-auto block min-h-screen object-top transition-opacity duration-300 opacity-0"
+      />
+    </div>
+
+    <script>
+      // --- CẤU HÌNH DANH SÁCH ẢNH CỦA BẠN ---
+      const myImages = [
+        "./png_figma/j1.png",
+        "./png_figma/j2.png",
+        "./png_figma/j3.png",
+        "./png_figma/j4.png",
+        "./png_figma/j5.png",
+        "./png_figma/j6.png",
+        // Link demo dự phòng nếu ảnh local không tải được
+        // "https://picsum.photos/id/10/1920/2500", // Ảnh dài demo
+        // "https://picsum.photos/id/11/1920/1080",
+      ];
+
+      let currentImageIndex = 0;
+      let isLoading = false;
+
+      const container = document.getElementById("gallery-container");
+      const mainImage = document.getElementById("main-image");
+      const loader = document.getElementById("loader");
+
+      function getNextImageUrl() {
+        const nextIndex = (currentImageIndex + 1) % myImages.length;
+        return {
+          url: myImages[nextIndex],
+          index: nextIndex,
+        };
+      }
+
+      // Hàm tải và hiển thị ảnh đầu tiên
+      function initGallery() {
+        if (myImages.length > 0) {
+          loadImage(myImages[0], 0);
+        }
+      }
+
+      function loadImage(url, index) {
+        isLoading = true;
+        loader.style.display = "block";
+        mainImage.style.opacity = "0"; // Fade out ảnh cũ (nếu có) hoặc ẩn ảnh đang load
+
+        // Tạo ảnh tạm để preload
+        const tempImg = new Image();
+
+        tempImg.onload = () => {
+          // Khi ảnh tải xong
+          mainImage.src = url;
+          currentImageIndex = index;
+
+          // Cuộn lên đầu trang mỗi khi chuyển ảnh mới
+          container.scrollTop = 0;
+
+          // Hiển thị ảnh (Fade in)
+          // setTimeout nhỏ để đảm bảo transition hoạt động
+          setTimeout(() => {
+            mainImage.style.opacity = "1";
+            loader.style.display = "none";
+            isLoading = false;
+          }, 50);
+        };
+
+        tempImg.onerror = () => {
+          console.error("Lỗi tải ảnh: " + url);
+          loader.style.display = "none";
+          isLoading = false;
+          // Tự động chuyển sang ảnh kế tiếp nếu lỗi
+          // handleTransition(null); // Có thể bật lại nếu muốn tự động bỏ qua
+        };
+
+        tempImg.src = url;
+      }
+
+      function handleTransition(event) {
+        // Ngăn chặn chuyển ảnh khi click vào nav
+        if (event && event.target.closest("nav")) return;
+
+        if (isLoading) return;
+
+        const nextData = getNextImageUrl();
+        loadImage(nextData.url, nextData.index);
+      }
+
+      // Khởi chạy
+      initGallery();
+
+      // Sự kiện click
+      container.addEventListener("click", handleTransition);
+
+      // Dự phòng click vào body (trừ nav)
+      document.body.addEventListener("click", (e) => {
+        if (e.target.closest("nav")) return;
+        if (e.target.closest("#gallery-container")) return; // Đã xử lý ở trên
+        handleTransition(e);
+      });
+    </script>
+  </body>
+</html>

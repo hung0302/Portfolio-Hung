@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hoàng Việt Hưng - Portfolio</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Cấu hình Tailwind -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "brand-orange": "#F58220",
+              "brand-orange-dark": "#E06A00",
+              "bg-beige": "#FFF1E5",
+            },
+            fontFamily: {
+              sans: ["Montserrat", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- CSS Custom -->
+    <style>
+      /* Ẩn thanh cuộn nhưng vẫn cho phép cuộn */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Animation xoay vòng tròn */
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Hiệu ứng reveal khi cuộn trang */
+      .reveal-section {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 1s ease-out;
+      }
+      .reveal-section.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Hiệu ứng nổi cho icon vệ tinh */
+      .tech-orbit-icon {
+        animation: float 3s ease-in-out infinite;
+      }
+      .tech-orbit-icon.delay-1 {
+        animation-delay: 1s;
+      }
+      .tech-orbit-icon.delay-2 {
+        animation-delay: 2s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-white text-gray-800 antialiased">
+    <!-- 1. Top Navigation -->
+    <nav
+      class="bg-black text-white text-xs md:text-sm py-4 sticky top-0 z-50 shadow-md"
+    >
+      <div
+        class="container mx-auto px-4 flex justify-between md:justify-center items-center gap-6 md:gap-14 overflow-x-auto md:overflow-visible whitespace-nowrap scrollbar-hide"
+      >
+        <a
+          href="index.html"
+          class="nav-link hover:text-brand-orange transition flex items-center gap-2 font-medium"
+          ><i class="fas fa-home"></i> HOME</a
+        >
+
+        <div class="relative group">
+          <a
+            href="#projects"
+            class="nav-link group-hover:text-brand-orange transition font-medium flex items-center cursor-pointer py-2"
+          >
+            MY PROJECTS
+            <i
+              class="fas fa-chevron-down text-[10px] ml-1 group-hover:rotate-180 transition-transform duration-300"
+            ></i>
+          </a>
+
+          <!-- Dropdown Menu -->
+          <div
+            class="absolute left-0 mt-0 w-48 bg-black border border-gray-800 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top group-hover:translate-y-0 translate-y-2 z-50 rounded-b-md"
+          >
+            <a
+              href="project_data.html"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 border-b border-gray-900 transition text-xs md:text-sm"
+              >DATA ANALYST</a
+            >
+            <a
+              href="project_automation.html"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 border-b border-gray-900 transition text-xs md:text-sm"
+              >AUTOMATION</a
+            >
+            <a
+              href="https://drive.google.com/drive/u/0/folders/1xR6uWmjnVua4akJRp3AfR-cG0UY9Okv9"
+              target="_blank"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 transition text-xs md:text-sm"
+              >OTHERS</a
+            >
+          </div>
+        </div>
+
+        <a
+          href="certificate.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >MY CERTIFICATIONS</a
+        >
+        <a
+          href="My_journey.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >MY JOURNEY</a
+        >
+        <a
+          href="Bookingme.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >BOOKING ME</a
+        >
+        <a
+          href="Looking_fore_more.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >LOOKING FOR MORE!</a
+        >
+      </div>
+    </nav>
+
+    <!-- Main Content (Đã giảm padding theo tỷ lệ 80%) -->
+    <main class="px-[96px] py-[64px]">
+      <!-- Grid Gap đã giảm: 100->80, 80->64 -->
+      <div class="grid grid-cols-2 gap-x-[80px] gap-y-[64px] items-start">
+        <!-- Certificate 1: IBM Data Analyst -->
+        <div class="flex flex-col items-center">
+          <!-- Font size giảm 32px -> 26px -->
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            IBM Data Analyst
+          </h2>
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden relative group">
+              <img
+                src="./image_cert/IBM Data Analyst.png"
+                alt="IBM Data Analyst"
+                class="w-full h-auto block"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate 2: Microsoft Power BI -->
+        <div class="flex flex-col items-center">
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            Microsoft Power BI
+          </h2>
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden">
+              <img
+                src="././image_cert/powerbi.png"
+                alt="Microsoft Power BI"
+                class="w-full h-auto block"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate 3: IBM Machine Learning -->
+        <div class="flex flex-col items-center">
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            IBM Machine Learning
+          </h2>
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden">
+              <img
+                src="./image_cert/ml.png"
+                alt="IBM Machine Learning"
+                class="w-full h-auto block"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate 4: Foundation Of Data Engineer -->
+        <div class="flex flex-col items-center">
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            Foundation Of Data Engineer
+          </h2>
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden">
+              <img
+                src="./image_cert/DE.png"
+                alt="Foundation Of Data Engineer"
+                class="w-full h-auto block"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate 5: IELTS 6.5 -->
+        <div class="flex flex-col items-center">
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            IELTS 6.5
+          </h2>
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden">
+              <img
+                src="./image_cert/01001863_ielts.pdf.jpg"
+                alt="IELTS 6.5"
+                class="w-full h-auto block"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate 6: Generative AI -->
+        <div class="flex flex-col items-center">
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            Generative AI
+          </h2>
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden">
+              <img
+                src="./image_cert/genai.png"
+                alt="Generative AI"
+                class="w-full h-auto block"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate 7: Digital Performance -->
+        <div class="flex flex-col items-center">
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            Digital Performance
+          </h2>
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden">
+              <img
+                src="./image_cert/DPM025_HOANG VIET HUNG.png"
+                alt="Digital Performance"
+                class="w-full h-auto block"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate 8: RBAC 1st Runner up -->
+        <div class="flex flex-col items-center">
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            RBAC 1st Runner up
+          </h2>
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden">
+              <img
+                src="./image_cert/rbac.png"
+                alt="RBAC 1st Runner up"
+                class="w-full h-auto block"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate 9: TOP 20 DeFrontier -->
+        <div class="flex flex-col items-center">
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            TOP 20 DeFrontier
+          </h2>
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden">
+              <img
+                src="./image_cert/Defrontier.jpg"
+                alt="TOP 20 DeFrontier"
+                class="w-full h-auto block"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate 10: Natural Language Processing -->
+        <div class="flex flex-col items-center">
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            Natural Language Processing
+          </h2>
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden">
+              <img
+                src="./image_cert/NLP.jpg"
+                alt="Natural Language Processing"
+                class="w-full h-auto block"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate 11: Gcontest -->
+        <div class="flex flex-col items-center">
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            G-Contest Champion
+          </h2>
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden">
+              <img
+                src="./image_cert/gcontest.png"
+                alt="G-Contest Champion"
+                class="w-full h-auto block"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Placeholder 1 -->
+        <div class="flex flex-col items-center">
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            Google Certificated Educator Lever 1
+          </h2>
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden">
+              <img
+                src="./image_cert/ggedul1.png"
+                alt="New Certificate 1"
+                class="w-full h-auto block"
+                onerror="this.src='https://placehold.co/600x400?text=Certificate+Image';this.onerror=null;"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Placeholder 2 -->
+        <div class="flex flex-col items-center">
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            Google Certificated Educator Lever 2
+          </h2>
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden">
+              <img
+                src="./image_cert/ggedul2.png"
+                alt="New Certificate 2"
+                class="w-full h-auto block"
+                onerror="this.src='https://placehold.co/600x400?text=Certificate+Image';this.onerror=null;"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Placeholder 3 -->
+        <div class="flex flex-col items-center">
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            Gemini Certificated Educator
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden">
+              <img
+                src="./image_cert/geminiedu.png"
+                alt="New Certificate 3"
+                class="w-full h-auto block"
+                onerror="this.src='https://placehold.co/600x400?text=Certificate+Image';this.onerror=null;"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Placeholder 4 -->
+        <div class="flex flex-col items-center">
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            Gemini Certificated Falcuty
+          </h2>
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden">
+              <img
+                src="./image_cert/gemini.png"
+                alt="New Certificate 4"
+                class="w-full h-auto block"
+                onerror="this.src='https://placehold.co/600x400?text=Certificate+Image';this.onerror=null;"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Placeholder 5 -->
+        <div class="flex flex-col items-center">
+          <h2
+            class="text-[26px] text-gray-800 font-serif-custom mb-5 text-center"
+          >
+            Gemini Certificated Student
+          </h2>
+          <div
+            class="w-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-2 duration-300 border border-gray-100 bg-white p-2"
+          >
+            <div class="w-full bg-gray-50 overflow-hidden">
+              <img
+                src="./image_cert/Geministu.png"
+                alt="New Certificate 5"
+                class="w-full h-auto block"
+                onerror="this.src='https://placehold.co/600x400?text=Certificate+Image';this.onerror=null;"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

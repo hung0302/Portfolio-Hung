@@ -1,0 +1,95 @@
+/* style.css - Chứa toàn bộ CSS tùy chỉnh */
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+h1,
+h2,
+h3.serif-title {
+  font-family: "Playfair Display", serif;
+}
+
+/* Tùy chỉnh thanh cuộn (Scrollbar) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #f58220;
+  border-radius: 4px;
+}
+
+/* Hiệu ứng bay (Orbit) cho các icon công nghệ */
+@keyframes orbit {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+.tech-orbit-icon {
+  /* Đã bỏ position:absolute ở đây vì nó được set inline trong HTML để căn chỉnh vị trí */
+  background: white;
+  padding: 10px;
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: orbit 4s ease-in-out infinite;
+  z-index: 20;
+}
+.tech-orbit-icon.delay-1 {
+  animation-delay: 1s;
+}
+.tech-orbit-icon.delay-2 {
+  animation-delay: 2s;
+}
+
+/* Mặt nạ làm mờ chân ảnh nhân vật */
+.mask-image-bottom {
+  -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+}
+
+/* Class hỗ trợ cho Javascript Scroll Reveal */
+.reveal-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.reveal-section.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Page transition (CSS-only): FADE IN khi load trang ===== */
+body {
+  opacity: 0;
+  animation: pageFadeIn 0.45s ease forwards;
+}
+
+@keyframes pageFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* (Tuỳ chọn) Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  body {
+    animation: none;
+    opacity: 1;
+  }
+}

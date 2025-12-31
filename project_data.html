@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Portfolio - Data Analyst</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "brand-orange": "#f58220",
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', "serif"],
+              sans: ['"Montserrat"', "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* style.css - Chứa toàn bộ CSS tùy chỉnh */
+
+      body {
+        font-family: "Montserrat", sans-serif;
+      }
+
+      h1,
+      h2,
+      h3.serif-title {
+        font-family: "Playfair Display", serif;
+      }
+
+      /* Tùy chỉnh thanh cuộn (Scrollbar) cho toàn trang */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #f58220;
+        border-radius: 4px;
+      }
+
+      /* Ẩn thanh cuộn cho menu ngang trên mobile */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Hiệu ứng bay (Orbit) cho các icon công nghệ */
+      @keyframes orbit {
+        0% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(5deg);
+        }
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+      }
+
+      .tech-orbit-icon {
+        /* Đã bỏ position:absolute ở đây vì nó được set inline trong HTML để căn chỉnh vị trí */
+        background: white;
+        padding: 10px;
+        border-radius: 50%;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: orbit 4s ease-in-out infinite;
+        z-index: 20;
+      }
+      .tech-orbit-icon.delay-1 {
+        animation-delay: 1s;
+      }
+      .tech-orbit-icon.delay-2 {
+        animation-delay: 2s;
+      }
+
+      /* Mặt nạ làm mờ chân ảnh nhân vật */
+      .mask-image-bottom {
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          black 90%,
+          transparent 100%
+        );
+        mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+      }
+
+      /* Class hỗ trợ cho Javascript Scroll Reveal */
+      .reveal-section {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease-out;
+      }
+
+      .reveal-section.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body class="bg-white text-gray-800 antialiased font-sans">
+    <!-- 1. Top Navigation (Updated) -->
+    <nav
+      class="bg-black text-white text-xs md:text-sm py-4 sticky top-0 z-50 shadow-md"
+    >
+      <div
+        class="container mx-auto px-4 flex justify-between md:justify-center items-center gap-6 md:gap-14 overflow-x-auto md:overflow-visible whitespace-nowrap scrollbar-hide"
+      >
+        <a
+          href="index.html"
+          class="nav-link hover:text-brand-orange transition flex items-center gap-2 font-medium"
+        >
+          <i class="fas fa-home"></i> HOME
+        </a>
+
+        <!-- --- BẮT ĐẦU PHẦN DROPDOWN --- -->
+        <div class="relative group">
+          <a
+            href="#projects"
+            class="nav-link group-hover:text-brand-orange transition font-medium flex items-center cursor-pointer py-2"
+          >
+            MY PROJECTS
+            <i
+              class="fas fa-chevron-down text-[10px] ml-1 group-hover:rotate-180 transition-transform duration-300"
+            ></i>
+          </a>
+
+          <!-- Dropdown Menu -->
+          <div
+            class="absolute left-0 mt-0 w-48 bg-black border border-gray-800 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top group-hover:translate-y-0 translate-y-2 z-50 rounded-b-md"
+          >
+            <!-- Link đến project_data.html -->
+            <a
+              href="project_data.html"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 border-b border-gray-900 transition text-xs md:text-sm"
+              >DATA ANALYST</a
+            >
+            <!-- Đã thay thế Marketing bằng Automation và link đến project_automation.html -->
+            <a
+              href="project_automation.html"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 border-b border-gray-900 transition text-xs md:text-sm"
+              >AUTOMATION</a
+            >
+            <a
+              href="https://drive.google.com/drive/u/0/folders/1xR6uWmjnVua4akJRp3AfR-cG0UY9Okv9"
+              target="_blank"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 transition text-xs md:text-sm"
+              >OTHERS</a
+            >
+          </div>
+        </div>
+        <!-- --- KẾT THÚC PHẦN DROPDOWN --- -->
+
+        <!-- Link đến certificate.html -->
+        <a
+          href="certificate.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >MY CERTIFICATIONS</a
+        >
+        <a
+          href="My_journey.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >MY JOURNEY</a
+        >
+        <a
+          href="Bookingme.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >BOOKING ME</a
+        >
+        <a
+          href="Looking_fore_more.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >LOOKING FOR MORE!</a
+        >
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="projects">
+      <!-- SECTION 1: DATA ANALYST -->
+      <section class="mb-20 reveal-section">
+        <h1
+          class="text-4xl md:text-5xl font-serif text-black mb-10 tracking-tight"
+        >
+          DATA ANALYST
+        </h1>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Card 1: Analysis Of Bad Dept -->
+          <a
+            href="https://drive.google.com/drive/folders/1KLxEYPyBUr_L3-TMFJ6q8XE7DMJkm3zt?usp=drive_link"
+            target="_blank"
+            class="block group relative overflow-hidden rounded-3xl shadow-lg cursor-pointer aspect-square"
+          >
+            <img
+              src="./image/457064471_534099542611539_2759539822158690461_n.jpg"
+              alt="Season 5"
+              class="absolute inset-0 w-full h-full object-cover transform scale-[1.35] transition-transform duration-300 group-hover:scale-[1.45]"
+            />
+
+            <!-- Hover Overlay Text -->
+            <div
+              class="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-start justify-start p-6"
+            >
+              <h3
+                class="text-white text-xl md:text-2xl font-bold font-sans leading-tight mt-2"
+              >
+                Analysis Of Bad Dept In Bank Finance
+              </h3>
+            </div>
+          </a>
+
+          <!-- Card 2: G'Contest -->
+          <a
+            href="https://drive.google.com/drive/folders/1OlC8iYykVO8mxlH4u8P78kjaxJwhErME"
+            target="_blank"
+            class="block group relative overflow-hidden rounded-3xl shadow-lg cursor-pointer aspect-square"
+          >
+            <img
+              src="./image/507189972_654351920946270_603898883485218523_n.jpg"
+              alt="Final Night"
+              class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+            />
+            <div
+              class="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-start justify-start p-6"
+            >
+              <h3
+                class="text-white text-xl md:text-2xl font-bold font-sans leading-tight mt-2"
+              >
+                Analysis Of The Bank Account Opening Process
+              </h3>
+            </div>
+          </a>
+
+          <!-- Card 3: Data Flow -->
+          <a
+            href="https://drive.google.com/drive/folders/1AR56Y-MYjhc0qRE-P7JLijHy5xQ_Pgxa"
+            target="_blank"
+            class="block group relative overflow-hidden rounded-3xl shadow-lg cursor-pointer aspect-square"
+          >
+            <img
+              src="./image/Screenshot 2025-12-15 152333.png"
+              alt="Data Flow"
+              class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+            />
+            <div
+              class="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-start justify-start p-6"
+            >
+              <h3
+                class="text-white text-xl md:text-2xl font-bold font-sans leading-tight mt-2"
+              >
+                Product Recommendation In Banking
+              </h3>
+            </div>
+          </a>
+
+          <!-- Card 4: Presenter -->
+          <a
+            href="https://drive.google.com/drive/folders/1MG5qmqD0F944kQpxCICWaBUE4AOvEWLm"
+            target="_blank"
+            class="block group relative overflow-hidden rounded-3xl shadow-lg cursor-pointer aspect-square"
+          >
+            <img
+              src="./image/Screenshot 2025-12-15 153650.png"
+              alt="Presenter"
+              class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+            />
+            <div
+              class="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-start justify-start p-6"
+            >
+              <h3
+                class="text-white text-xl md:text-2xl font-bold font-sans leading-tight mt-2"
+              >
+                Sales Dashboard Creating And Insights
+              </h3>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- SECTION 2: CREATING DASHBOARD -->
+      <section class="reveal-section">
+        <div class="mb-8">
+          <h1
+            class="text-4xl md:text-5xl font-serif text-black mb-2 tracking-tight"
+          >
+            CREATING DASHBOARD
+          </h1>
+          <p class="text-gray-600 text-sm md:text-base font-light italic">
+            Clicks in images to go to Dashboard Website
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Dashboard 1 -->
+          <a
+            href="https://report.onhandbi.com/public/report?token=eyJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfbGlua19pZCI6NDczLCJoYXNfcGFzc2NvZGUiOmZhbHNlLCJ0aW1lIjoxNzU4MjEzNDg5fQ.cS66R-7c6MD9V8VFQm_4amO7IksnsEuaTrwt7dFHUzc"
+            target="_blank"
+            class="block group border border-black rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+          >
+            <div class="relative overflow-hidden aspect-[3/2]">
+              <img
+                src="./image/indadb.png"
+                alt="Dashboard 1"
+                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <!-- Hover Overlay -->
+              <div
+                class="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-start justify-start p-6"
+              >
+                <h3
+                  class="text-white text-2xl font-bold font-sans leading-tight mt-4"
+                >
+                  9 Pages of Insurance Analysis Dashboard
+                </h3>
+              </div>
+            </div>
+          </a>
+
+          <!-- Dashboard 2 -->
+          <a
+            href="https://report.onhandbi.com/public/report?token=eyJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfbGlua19pZCI6NDc0LCJoYXNfcGFzc2NvZGUiOmZhbHNlLCJ0aW1lIjoxNzU4MjE0MTkxfQ.T4J3hChF_iJ466mYHDGbj3MFxd0b-Q1xqqWideLQ2js"
+            target="_blank"
+            class="block group border border-black rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+          >
+            <div class="relative overflow-hidden aspect-[3/2]">
+              <img
+                src="./image/mar_db.png"
+                alt="Dashboard 2"
+                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <!-- Hover Overlay -->
+              <div
+                class="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-start justify-start p-6"
+              >
+                <h3
+                  class="text-white text-2xl font-bold font-sans leading-tight mt-4"
+                >
+                  5 Pages of Marketing Campaign Dashboard
+                </h3>
+              </div>
+            </div>
+          </a>
+
+          <!-- Dashboard 3 -->
+          <a
+            href="https://report.onhandbi.com/public/report?token=eyJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfbGlua19pZCI6NDc2LCJoYXNfcGFzc2NvZGUiOmZhbHNlLCJ0aW1lIjoxNzU4MjE0NjAwfQ.bVMyBTLBpkl_bkKW4WfdU4LgsCPwSkyAl5zD1COZCVo"
+            target="_blank"
+            class="block group border border-black rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+          >
+            <div class="relative overflow-hidden aspect-[3/2]">
+              <img
+                src="./image/loan_db.png"
+                alt="Dashboard 3"
+                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <!-- Hover Overlay -->
+              <div
+                class="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-start justify-start p-6"
+              >
+                <h3
+                  class="text-white text-2xl font-bold font-sans leading-tight mt-4"
+                >
+                  1 Page of Loan Analysis Dashboard
+                </h3>
+              </div>
+            </div>
+          </a>
+
+          <!-- Dashboard 4 -->
+          <a
+            href="https://report.onhandbi.com/public/report?token=eyJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfbGlua19pZCI6NDc1LCJoYXNfcGFzc2NvZGUiOmZhbHNlLCJ0aW1lIjoxNzU4MjE0NDk5fQ.cYpU01Bu9iJw1ESbHJA5azng8MTCRsj5_qJyeSIfAoA"
+            target="_blank"
+            class="block group border border-black rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+          >
+            <div class="relative overflow-hidden aspect-[3/2]">
+              <img
+                src="./image/horizon_db.png"
+                alt="Dashboard 4"
+                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <!-- Hover Overlay -->
+              <div
+                class="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-start justify-start p-6"
+              >
+                <h3
+                  class="text-white text-2xl font-bold font-sans leading-tight mt-4"
+                >
+                  6 Pages of Horizon's Marketing Dashboard
+                </h3>
+              </div>
+            </div>
+          </a>
+
+          <!-- Dashboard 5 -->
+          <a
+            href="https://report.onhandbi.com/public/report?token=eyJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfbGlua19pZCI6NDc3LCJoYXNfcGFzc2NvZGUiOmZhbHNlLCJ0aW1lIjoxNzU4MzgzMjIyfQ.o9s4lK3yc_RmgF8JqgrdPLnOFiuLE8JZJzRiqb1GmaY"
+            target="_blank"
+            class="block group border border-black rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+          >
+            <div class="relative overflow-hidden aspect-[3/2]">
+              <img
+                src="./image/insurance.png"
+                alt="Dashboard 5"
+                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <!-- Hover Overlay -->
+              <div
+                class="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-start justify-start p-6"
+              >
+                <h3
+                  class="text-white text-2xl font-bold font-sans leading-tight mt-4"
+                >
+                  8 Pages of Company Sales Dashboard
+                </h3>
+              </div>
+            </div>
+          </a>
+
+          <!-- Dashboard 6 -->
+          <a
+            href="https://report.onhandbi.com/public/report?token=eyJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfbGlua19pZCI6NDc8LCJoYXNfcGFzc2NvZGUiOmZhbHNlLCJ0aW1lIjoxNzU4MzgzMzgzfQ.GqnHWV5KdjBy6AWJ6G6S-ZETSn5t57tk_teZ-Vxowk0"
+            target="_blank"
+            class="block group border border-black rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+          >
+            <div class="relative overflow-hidden aspect-[3/2]">
+              <img
+                src="./image/resurance.png"
+                alt="Dashboard 6"
+                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <!-- Hover Overlay -->
+              <div
+                class="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-start justify-start p-6"
+              >
+                <h3
+                  class="text-white text-2xl font-bold font-sans leading-tight mt-4"
+                >
+                  1 Page of Reinsurance Analytics Dashboard
+                </h3>
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Spacer -->
+    <div class="h-20"></div>
+
+    <script>
+      // Simple scroll reveal script
+      document.addEventListener("DOMContentLoaded", () => {
+        const reveals = document.querySelectorAll(".reveal-section");
+
+        const revealOnScroll = () => {
+          const windowHeight = window.innerHeight;
+          const elementVisible = 100;
+
+          reveals.forEach((reveal) => {
+            const elementTop = reveal.getBoundingClientRect().top;
+            if (elementTop < windowHeight - elementVisible) {
+              reveal.classList.add("active");
+            }
+          });
+        };
+
+        window.addEventListener("scroll", revealOnScroll);
+        revealOnScroll(); // Trigger once on load
+      });
+    </script>
+  </body>
+</html>

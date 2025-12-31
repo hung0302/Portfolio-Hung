@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liên Hệ - Hoàng Việt Hưng</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Cấu hình Tailwind -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "brand-orange": "#F58220",
+              "brand-orange-dark": "#E06A00",
+              "bg-beige": "#FFF1E5",
+            },
+            fontFamily: {
+              sans: ["Montserrat", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+              chat: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Ẩn thanh cuộn cho Nav bar */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Custom Input Styles */
+      .custom-input {
+        transition: all 0.3s ease;
+      }
+      .custom-input:focus {
+        border-color: #f58220;
+        box-shadow: 0 0 0 4px rgba(245, 130, 32, 0.1);
+      }
+
+      /* Hiệu ứng load button */
+      .btn-loading .btn-text {
+        visibility: hidden;
+      }
+      .btn-loading::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        top: 50%;
+        left: 50%;
+        margin-top: -10px;
+        margin-left: -10px;
+        border: 2px solid #ffffff;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: btn-spin 0.6s linear infinite;
+      }
+      @keyframes btn-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Chat Widget Styles (Giữ nguyên) */
+      :root {
+        --chat-primary: #4f46e5;
+        --chat-secondary: #10b981;
+        --chat-tertiary: #f59e0b;
+        --chat-width: 350px;
+        --chat-height: 500px;
+      }
+      .chat-toggle-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background-color: var(--chat-primary);
+        color: white;
+        border-radius: 50%;
+        border: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s;
+        z-index: 9999;
+      }
+      .chat-toggle-btn:hover {
+        transform: scale(1.1);
+      }
+      .chat-widget {
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+        width: var(--chat-width);
+        height: var(--chat-height);
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 9998;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+        font-family: "Inter", sans-serif;
+      }
+      .chat-widget.open {
+        opacity: 1;
+        pointer-events: all;
+        transform: translateY(0);
+      }
+      .chat-header {
+        background: var(--chat-primary);
+        color: white;
+        padding: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .bot-selection-screen {
+        flex: 1;
+        padding: 20px;
+        background: #f9fafb;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      .bot-option-card {
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: all 0.2s;
+      }
+      .bot-option-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      .chat-interface {
+        flex: 1;
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .chat-interface.active {
+        display: flex;
+      }
+      .bot-selection-screen.hidden {
+        display: none;
+      }
+      .chat-messages {
+        flex: 1;
+        padding: 16px;
+        overflow-y: auto;
+        background: #f9fafb;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .message {
+        max-width: 80%;
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-size: 14px;
+        word-wrap: break-word;
+      }
+      .message.user {
+        align-self: flex-end;
+        background-color: var(--chat-primary);
+        color: white;
+        border-bottom-right-radius: 2px;
+      }
+      .message.bot {
+        align-self: flex-start;
+        background-color: #e5e7eb;
+        color: #1f2937;
+        border-bottom-left-radius: 2px;
+      }
+      .chat-input-area {
+        padding: 12px;
+        border-top: 1px solid #e5e7eb;
+        background: white;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .chat-input-area input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 20px;
+        outline: none;
+      }
+      .chat-input-area button {
+        background: var(--chat-primary);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      @media (max-width: 480px) {
+        .chat-widget {
+          width: 100%;
+          height: 100%;
+          bottom: 0;
+          right: 0;
+          border-radius: 0;
+        }
+        .chat-toggle-btn {
+          bottom: 20px;
+          right: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="bg-bg-beige text-gray-800 antialiased min-h-screen flex flex-col"
+  >
+    <!-- 1. Top Navigation (Task Bar) -->
+    <nav
+      class="bg-black text-white text-xs md:text-sm py-4 sticky top-0 z-50 shadow-md w-full"
+    >
+      <div
+        class="container mx-auto px-4 flex justify-between md:justify-center items-center gap-6 md:gap-14 overflow-x-auto md:overflow-visible whitespace-nowrap scrollbar-hide"
+      >
+        <a
+          href="index.html"
+          class="nav-link hover:text-brand-orange transition flex items-center gap-2 font-medium"
+        >
+          <i class="fas fa-home"></i> HOME
+        </a>
+
+        <div class="relative group">
+          <a
+            href="#projects"
+            class="nav-link group-hover:text-brand-orange transition font-medium flex items-center cursor-pointer py-2"
+          >
+            MY PROJECTS
+            <i
+              class="fas fa-chevron-down text-[10px] ml-1 group-hover:rotate-180 transition-transform duration-300"
+            ></i>
+          </a>
+
+          <!-- Dropdown Menu -->
+          <div
+            class="absolute left-0 mt-0 w-48 bg-black border border-gray-800 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top group-hover:translate-y-0 translate-y-2 z-50 rounded-b-md"
+          >
+            <a
+              href="project_data.html"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 border-b border-gray-900 transition text-xs md:text-sm"
+              >DATA ANALYST</a
+            >
+            <a
+              href="project_automation.html"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 border-b border-gray-900 transition text-xs md:text-sm"
+              >AUTOMATION</a
+            >
+            <a
+              href="https://drive.google.com/drive/u/0/folders/1xR6uWmjnVua4akJRp3AfR-cG0UY9Okv9"
+              target="_blank"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 transition text-xs md:text-sm"
+              >OTHERS</a
+            >
+          </div>
+        </div>
+
+        <a
+          href="certificate.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >MY CERTIFICATIONS</a
+        >
+        <a
+          href="My_journey.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >MY JOURNEY</a
+        >
+        <a
+          href="Bookingme.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >BOOKING ME</a
+        >
+        <a
+          href="Looking_fore_more.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >LOOKING FOR MORE!</a
+        >
+      </div>
+    </nav>
+
+    <!-- Wrapper chính (Căn giữa nội dung) -->
+    <div class="flex-grow flex flex-col items-center justify-center p-4 w-full">
+      <main class="w-full max-w-6xl">
+        <!-- Logo hoặc Branding (Optional) -->
+        <div class="text-center mb-8">
+          <h1
+            class="text-2xl font-serif font-bold text-gray-900 tracking-widest"
+          ></h1>
+          <div class="h-1 w-12 bg-brand-orange mx-auto mt-2"></div>
+        </div>
+
+        <!-- Container chính chia cột -->
+        <div
+          class="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row w-full"
+        >
+          <!-- Cột Trái: Thông tin Liên hệ (Giữ nguyên style cũ) -->
+          <div
+            class="w-full lg:w-5/12 bg-brand-orange text-white p-10 md:p-12 flex flex-col justify-between relative overflow-hidden"
+          >
+            <!-- Hình trang trí -->
+            <div
+              class="absolute top-[-50px] right-[-50px] w-40 h-40 bg-white opacity-10 rounded-full pointer-events-none"
+            ></div>
+            <div
+              class="absolute bottom-[-20px] left-[-20px] w-20 h-20 bg-white opacity-10 rounded-full pointer-events-none"
+            ></div>
+
+            <div>
+              <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6">
+                LIÊN HỆ VỚI TÔI
+              </h2>
+              <p class="text-lg opacity-90 mb-8 leading-relaxed font-light">
+                Bạn có dự án thú vị muốn hợp tác? Hay chỉ đơn giản là muốn kết
+                nối? Hãy điền vào biểu mẫu để chúng ta bắt đầu câu chuyện!
+              </p>
+
+              <div class="space-y-6">
+                <div class="flex items-center gap-4 group cursor-pointer">
+                  <div
+                    class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-brand-orange transition duration-300"
+                  >
+                    <i class="fa-solid fa-envelope text-xl"></i>
+                  </div>
+                  <div>
+                    <p class="text-xs opacity-70 uppercase tracking-wider">
+                      Email
+                    </p>
+                    <a
+                      href="mailto:vhungy302@gmail.com"
+                      class="font-medium hover:underline text-lg"
+                      >vhungy302@gmail.com</a
+                    >
+                  </div>
+                </div>
+                <div class="flex items-center gap-4 group cursor-pointer">
+                  <div>
+                    <p class="text-xs opacity-70 uppercase tracking-wider"></p>
+                    <p class="font-medium text-lg"></p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4 group cursor-pointer">
+                  <div
+                    class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-brand-orange transition duration-300"
+                  >
+                    <i class="fa-solid fa-location-dot text-xl"></i>
+                  </div>
+                  <div>
+                    <p class="text-xs opacity-70 uppercase tracking-wider">
+                      Location
+                    </p>
+                    <p class="font-medium text-lg">Hanoi, Vietnam</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="mt-12 pt-8 border-t border-white/20 text-sm opacity-60 flex justify-between items-center"
+            >
+              <span>&copy; 2025 HVH.</span>
+              <div class="flex gap-4 text-lg">
+                <a href="#" class="hover:text-white/80"
+                  ><i class="fab fa-facebook"></i
+                ></a>
+                <a href="#" class="hover:text-white/80"
+                  ><i class="fab fa-linkedin"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cột Phải: Custom Form (Thay vì iframe) -->
+          <div class="w-full lg:w-7/12 bg-white p-10 md:p-14 relative">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">Gửi tin nhắn</h3>
+
+            <!-- 
+                    HƯỚNG DẪN KẾT NỐI GOOGLE FORM:
+                    1. Thay 'ACTION_URL_CUA_BAN' bằng link action form (Xem hướng dẫn view-source Google Form).
+                    Link thường có dạng: https://docs.google.com/forms/u/0/d/e/./formResponse
+                    2. Thay 'entry.NAME', 'entry.EMAIL',. bằng mã ID thật từ form của bạn.
+                -->
+            <form
+              action="https://docs.google.com/forms/d/e/1FAIpQLScP6XpjxxRLy6nc7Ks7QuQ0Ks_yj5uZwIih2uy2r_V9ZboG7A/formResponse
+"
+              method="POST"
+              target="hidden_iframe"
+              onsubmit="submitted=true;"
+              class="space-y-6"
+            >
+              <!-- Hàng 1: Họ tên + Số điện thoại -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="relative">
+                  <label
+                    class="block text-sm font-semibold text-gray-600 mb-2 uppercase text-xs tracking-wide"
+                    >Họ và tên</label
+                  >
+                  <div class="relative">
+                    <i
+                      class="fa-regular fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+                    ></i>
+                    <input
+                      type="text"
+                      name="entry.1570431573"
+                      placeholder="Nhập tên của bạn"
+                      required
+                      class="custom-input w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 placeholder-gray-400 focus:outline-none focus:bg-white"
+                    />
+                  </div>
+                </div>
+                <div class="relative">
+                  <label
+                    class="block text-sm font-semibold text-gray-600 mb-2 uppercase text-xs tracking-wide"
+                    >Số điện thoại</label
+                  >
+                  <div class="relative">
+                    <i
+                      class="fa-solid fa-phone absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+                    ></i>
+                    <input
+                      type="tel"
+                      name="entry.1163822802"
+                      placeholder="09xxxxxxxx"
+                      class="custom-input w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 placeholder-gray-400 focus:outline-none focus:bg-white"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hàng 2: Email -->
+              <div class="relative">
+                <label
+                  class="block text-sm font-semibold text-gray-600 mb-2 uppercase text-xs tracking-wide"
+                  >Email liên hệ</label
+                >
+                <div class="relative">
+                  <i
+                    class="fa-regular fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  ></i>
+                  <input
+                    type="email"
+                    name="entry.679127369"
+                    placeholder="example@gmail.com"
+                    required
+                    class="custom-input w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 placeholder-gray-400 focus:outline-none focus:bg-white"
+                  />
+                </div>
+              </div>
+
+              <!-- Hàng 3: Loại dự án (Radio/Select) -->
+              <div>
+                <label
+                  class="block text-sm font-semibold text-gray-600 mb-3 uppercase text-xs tracking-wide"
+                  >Bạn quan tâm về?</label
+                >
+                <div class="flex flex-wrap gap-4">
+                  <label class="cursor-pointer">
+                    <input
+                      type="radio"
+                      name="entry.1681287053"
+                      value="Data Analyst"
+                      class="peer sr-only"
+                      checked
+                    />
+                    <div
+                      class="px-5 py-2 rounded-full border border-gray-200 text-gray-500 text-sm peer-checked:bg-brand-orange peer-checked:text-white peer-checked:border-brand-orange transition-all"
+                    >
+                      Data Analyst
+                    </div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input
+                      type="radio"
+                      name="entry.1681287053"
+                      value="Automation"
+                      class="peer sr-only"
+                    />
+                    <div
+                      class="px-5 py-2 rounded-full border border-gray-200 text-gray-500 text-sm peer-checked:bg-brand-orange peer-checked:text-white peer-checked:border-brand-orange transition-all"
+                    >
+                      Automation
+                    </div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input
+                      type="radio"
+                      name="entry.1681287053"
+                      value="Khác"
+                      class="peer sr-only"
+                    />
+                    <div
+                      class="px-5 py-2 rounded-full border border-gray-200 text-gray-500 text-sm peer-checked:bg-brand-orange peer-checked:text-white peer-checked:border-brand-orange transition-all"
+                    >
+                      Khác
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Hàng 4: Nội dung -->
+              <div class="relative">
+                <label
+                  class="block text-sm font-semibold text-gray-600 mb-2 uppercase text-xs tracking-wide"
+                  >Lời nhắn</label
+                >
+                <textarea
+                  name="entry.189622649"
+                  rows="4"
+                  placeholder="Hãy chia sẻ thêm về yêu cầu của bạn."
+                  class="custom-input w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 placeholder-gray-400 focus:outline-none focus:bg-white resize-none"
+                ></textarea>
+              </div>
+
+              <!-- Button Gửi -->
+              <div class="pt-2">
+                <button
+                  type="submit"
+                  class="w-full bg-brand-orange text-white font-bold py-4 rounded-xl shadow-lg hover:bg-brand-orange-dark hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group"
+                  id="submitBtn"
+                >
+                  <span class="btn-text flex items-center justify-center gap-2">
+                    GỬI NGAY <i class="fa-solid fa-paper-plane"></i>
+                  </span>
+                </button>
+              </div>
+            </form>
+
+            <!-- Iframe ẩn để hứng kết quả submit mà không load lại trang -->
+            <iframe
+              name="hidden_iframe"
+              id="hidden_iframe"
+              style="display: none"
+              onload="if(submitted) {window.location='thankyou.html';}"
+            ></iframe>
+
+            <!-- Thông báo thành công giả lập (Hiển thị khi demo) -->
+            <div
+              id="successMessage"
+              class="hidden absolute inset-0 bg-white z-10 flex-col items-center justify-center text-center p-10 animate-fade-in"
+            >
+              <div
+                class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6"
+              >
+                <i class="fa-solid fa-check text-4xl text-green-500"></i>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-800 mb-2">
+                Đã gửi thành công!
+              </h3>
+              <p class="text-gray-500">
+                Cảm ơn bạn đã liên hệ. Tôi sẽ phản hồi sớm nhất có thể.
+              </p>
+              <button
+                onclick="window.location.reload()"
+                class="mt-8 text-brand-orange font-semibold hover:underline"
+              >
+                Gửi tin nhắn khác
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Chat Widget (Giữ nguyên không đổi) -->
+    <button class="chat-toggle-btn" id="floatingBtn" onclick="toggleChat()">
+      <i class="fa-solid fa-comment-dots"></i>
+    </button>
+    <div class="chat-widget" id="chatWidget">
+      <!-- (Nội dung chat widget giữ nguyên như cũ để đảm bảo tính năng) -->
+      <div class="chat-header" id="chatHeader">
+        <div class="header-title-area">
+          <button class="back-btn" id="backBtn" onclick="goBackToSelection()">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <span id="chatTitle">Trung tâm trợ giúp</span>
+        </div>
+        <button class="close-chat" onclick="toggleChat()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="bot-selection-screen" id="botSelectionScreen">
+        <!-- Bot Options -->
+        <div class="bot-option-card" onclick="selectBot('sales')">
+          <div class="bot-icon-box bg-sales">
+            <i class="fa-solid fa-comment"></i>
+          </div>
+          <div class="bot-info">
+            <h3>Trò chuyện với Mini Hưng</h3>
+            <p>AI đóng giả Hưng</p>
+          </div>
+        </div>
+        <div class="bot-option-card" onclick="selectBot('technical')">
+          <div class="bot-icon-box bg-support">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+          </div>
+          <div class="bot-info">
+            <h3>Hỗ trợ kỹ thuật</h3>
+            <p>Báo lỗi, hướng dẫn</p>
+          </div>
+        </div>
+        <div class="bot-option-card" onclick="selectBot('general')">
+          <div class="bot-icon-box bg-general">
+            <i class="fa-solid fa-calendar"></i>
+          </div>
+          <div class="bot-info">
+            <h3>Check lịch của Hưng</h3>
+            <p>Lịch rảnh & Công việc</p>
+          </div>
+        </div>
+      </div>
+      <div class="chat-interface" id="chatInterface">
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="typing-indicator" id="typingIndicator">
+          AI đang soạn tin.
+        </div>
+        <div class="chat-input-area">
+          <input
+            type="text"
+            id="userInput"
+            placeholder="Nhập tin nhắn."
+            autocomplete="off"
+          />
+          <button id="sendBtn" onclick="sendMessage()">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script Logic -->
+    <script>
+      // Xử lý Submit Form Giả lập
+      var submitted = false;
+
+      // Override lại onload của iframe để hiện thông báo thay vì chuyển trang (demo mode)
+      document.getElementById("hidden_iframe").onload = function () {
+        if (submitted) {
+          document.getElementById("successMessage").classList.remove("hidden");
+          document.getElementById("successMessage").classList.add("flex");
+          // Ẩn form đi
+          document.querySelector("form").classList.add("hidden");
+        }
+      };
+
+      // CHAT WIDGET LOGIC (GIỮ NGUYÊN)
+      const BOTS = {
+        sales: {
+          name: "Tư vấn bán hàng",
+          url: "https://foyil.app.n8n.cloud/webhook/8a2fadad-da7b-48d0-bb6d-eb5902a0e246/chat",
+          color: "#4f46e5",
+          welcome: "Xin chào! Tôi là Hưng",
+        },
+        technical: {
+          name: "Hỗ trợ kỹ thuật",
+          url: "https://foyil.app.n8n.cloud/webhook/8a2fadad-da7b-48d0-bb6d-eb5902a0e246/chat",
+          color: "#10b981",
+          welcome: "Chào bạn! Bạn đang gặp vấn đề kỹ thuật gì?",
+        },
+        general: {
+          name: "AI Check Lịch",
+          url: "https://foyil.app.n8n.cloud/webhook/603e966f-1eda-4185-8bc2-f9b1d925977e/chat",
+          color: "#f59e0b",
+          welcome: "Chào bạn! Hãy đặt câu hỏi về lịch trình.",
+        },
+      };
+      let currentBotKey = null,
+        currentWebhookUrl = "",
+        sessionId =
+          localStorage.getItem("n8n_session_id") ||
+          Math.random().toString(36).substring(7);
+      localStorage.setItem("n8n_session_id", sessionId);
+
+      const chatWidget = document.getElementById("chatWidget");
+      const botSelectionScreen = document.getElementById("botSelectionScreen");
+      const chatInterface = document.getElementById("chatInterface");
+      const chatHeader = document.getElementById("chatHeader");
+      const chatTitle = document.getElementById("chatTitle");
+      const backBtn = document.getElementById("backBtn");
+      const messagesContainer = document.getElementById("chatMessages");
+      const userInput = document.getElementById("userInput");
+      const sendBtn = document.getElementById("sendBtn");
+      const typingIndicator = document.getElementById("typingIndicator");
+
+      function toggleChat() {
+        chatWidget.classList.toggle("open");
+        if (chatWidget.classList.contains("open") && !currentBotKey)
+          goBackToSelection();
+      }
+      function selectBot(key) {
+        const bot = BOTS[key];
+        if (!bot) return;
+        currentBotKey = key;
+        currentWebhookUrl = bot.url;
+        chatHeader.style.backgroundColor = bot.color;
+        chatTitle.innerText = bot.name;
+        backBtn.style.display = "block";
+        sendBtn.style.backgroundColor = bot.color;
+        botSelectionScreen.classList.add("hidden");
+        chatInterface.classList.add("active");
+        messagesContainer.innerHTML = "";
+        addMessage(bot.welcome, "bot");
+        userInput.focus();
+      }
+      function goBackToSelection() {
+        currentBotKey = null;
+        chatHeader.style.backgroundColor = "#4f46e5";
+        chatTitle.innerText = "Trung tâm trợ giúp";
+        backBtn.style.display = "none";
+        chatInterface.classList.remove("active");
+        botSelectionScreen.classList.remove("hidden");
+      }
+      function addMessage(text, sender) {
+        const div = document.createElement("div");
+        div.classList.add("message", sender);
+        div.innerText = text;
+        if (sender === "user" && currentBotKey)
+          div.style.backgroundColor = BOTS[currentBotKey].color;
+        messagesContainer.appendChild(div);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
+      async function sendMessage() {
+        const text = userInput.value.trim();
+        if (!text) return;
+        addMessage(text, "user");
+        userInput.value = "";
+        userInput.disabled = true;
+        sendBtn.disabled = true;
+        typingIndicator.style.display = "block";
+        try {
+          const response = await fetch(currentWebhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              Message: text,
+              sessionId: sessionId,
+              botType: currentBotKey,
+            }),
+          });
+          if (!response.ok) throw new Error("Network error");
+          const data = await response.json();
+          addMessage(
+            data.output || data.reply || data.text || JSON.stringify(data),
+            "bot"
+          );
+        } catch (error) {
+          addMessage("Lỗi kết nối. Vui lòng thử lại sau.", "bot");
+        } finally {
+          userInput.disabled = false;
+          sendBtn.disabled = false;
+          typingIndicator.style.display = "none";
+          userInput.focus();
+        }
+      }
+      if (userInput)
+        userInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") sendMessage();
+        });
+    </script>
+  </body>
+</html>

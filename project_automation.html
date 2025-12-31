@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Portfolio - Automation Projects</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "brand-orange": "#f58220",
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', "serif"],
+              sans: ['"Montserrat"', "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* --- GIỮ NGUYÊN CSS TỪ TRANG GỐC ĐỂ ĐỒNG BỘ GIAO DIỆN --- */
+      body {
+        font-family: "Montserrat", sans-serif;
+      }
+
+      h1,
+      h2,
+      h3.serif-title {
+        font-family: "Playfair Display", serif;
+      }
+
+      /* Tùy chỉnh thanh cuộn */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #f58220;
+        border-radius: 4px;
+      }
+
+      /* Hiệu ứng Reveal */
+      .reveal-section {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease-out;
+      }
+
+      .reveal-section.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body class="bg-white text-gray-800 antialiased font-sans">
+    <!-- 1. Top Navigation (Taskbar) - Updated based on user request -->
+    <nav
+      class="bg-black text-white text-xs md:text-sm py-4 sticky top-0 z-50 shadow-md"
+    >
+      <div
+        class="container mx-auto px-4 flex justify-between md:justify-center items-center gap-6 md:gap-14 overflow-x-auto md:overflow-visible whitespace-nowrap scrollbar-hide"
+      >
+        <a
+          href="index.html.html"
+          class="nav-link hover:text-brand-orange transition flex items-center gap-2 font-medium"
+          ><i class="fas fa-home"></i> HOME</a
+        >
+
+        <div class="relative group">
+          <a
+            href="index.html#projects"
+            class="nav-link group-hover:text-brand-orange transition font-medium flex items-center cursor-pointer py-2 text-brand-orange"
+          >
+            <!-- Highlight text-brand-orange to indicate active parent section -->
+            MY PROJECTS
+            <i
+              class="fas fa-chevron-down text-[10px] ml-1 group-hover:rotate-180 transition-transform duration-300"
+            ></i>
+          </a>
+
+          <!-- Dropdown Menu -->
+          <div
+            class="absolute left-0 mt-0 w-48 bg-black border border-gray-800 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top group-hover:translate-y-0 translate-y-2 z-50 rounded-b-md"
+          >
+            <!-- Link đến project_data.html -->
+            <a
+              href="project_data.html"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 border-b border-gray-900 transition text-xs md:text-sm"
+              >DATA ANALYST</a
+            >
+            <!-- Link đến project_automation.html (Active) -->
+            <a
+              href="project_automation.html"
+              class="block px-4 py-3 text-brand-orange bg-gray-900 border-b border-gray-900 transition text-xs md:text-sm font-bold"
+              >AUTOMATION</a
+            >
+            <a
+              href="https://drive.google.com/drive/u/0/folders/1xR6uWmjnVua4akJRp3AfR-cG0UY9Okv9"
+              target="_blank"
+              class="block px-4 py-3 text-white hover:text-brand-orange hover:bg-gray-900 transition text-xs md:text-sm"
+              >OTHERS</a
+            >
+          </div>
+        </div>
+
+        <!-- Link đến certificate.html -->
+        <a
+          href="certificate.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >MY CERTIFICATIONS</a
+        >
+        <a
+          href="My_journey.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >MY JOURNEY</a
+        >
+        <a
+          href="Bookingme.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >BOOKING ME</a
+        >
+        <a
+          href="Looking_fore_more.html"
+          class="nav-link hover:text-brand-orange transition font-medium"
+          >LOOKING FOR MORE!</a
+        >
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <!-- HEADER SECTION -->
+      <section class="mb-12 reveal-section text-center md:text-left">
+        <h1
+          class="text-4xl md:text-6xl font-serif text-black mb-6 tracking-tight"
+        >
+          AUTOMATION <span class="text-brand-orange">SOLUTIONS</span>
+        </h1>
+      </section>
+
+      <!-- AUTOMATION PROJECTS GRID -->
+      <section class="mb-20 reveal-section">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Project 1: AI Agent -->
+          <a
+            href="https://daxav48612.app.n8n.cloud/webhook/7bd1ca5b-6e2e-4bba-b01d-dac455bc863c/chat"
+            target="_blank"
+            class="block group border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white"
+          >
+            <div class="relative overflow-hidden aspect-[16/10] bg-gray-100">
+              <!-- Image path kept as provided -->
+              <img
+                src="./image/aiagentbegin.png"
+                alt="AI Agent Begin"
+                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div class="p-6">
+              <h3
+                class="text-xl font-bold font-sans mb-2 group-hover:text-brand-orange transition-colors"
+              >
+                AI AGENT BEGIN
+              </h3>
+              <p class="text-gray-500 text-sm line-clamp-2">
+                AI Agent có thể học dữ liệu đầu vào nhằm trả lời kết quả phù hợp
+                (RAG)
+              </p>
+              <div
+                class="mt-4 flex items-center text-sm font-semibold text-brand-orange"
+              >
+                VIEW PROJECT
+                <i
+                  class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"
+                ></i>
+              </div>
+            </div>
+          </a>
+
+          <!-- Project 2: Report Automation -->
+          <a
+            href="https://daxav48612.app.n8n.cloud/webhook/603e966f-1eda-4185-8bc2-f9b1d925977e/chat"
+            target="_blank"
+            class="block group border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white"
+          >
+            <div class="relative overflow-hidden aspect-[16/10] bg-gray-100">
+              <img
+                src="./image/AIchecklich.png"
+                alt="AI Check Lich"
+                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div class="p-6">
+              <h3
+                class="text-xl font-bold font-sans mb-2 group-hover:text-brand-orange transition-colors"
+              >
+                AI AGENT CHECK LỊCH
+              </h3>
+              <p class="text-gray-500 text-sm line-clamp-2">
+                AI Agent giúp trả lời xem Hưng có bận không vào giờ bạn hỏi.
+              </p>
+              <div
+                class="mt-4 flex items-center text-sm font-semibold text-brand-orange"
+              >
+                VIEW PROJECT
+                <i
+                  class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"
+                ></i>
+              </div>
+            </div>
+          </a>
+
+          <!-- Project 3: Web Scraping -->
+          <a
+            href="#"
+            target="_blank"
+            class="block group border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white"
+          >
+            <div class="relative overflow-hidden aspect-[16/10] bg-gray-100">
+              <img
+                src="./image/AutotrackingP.png"
+                alt="Web Scraping"
+                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div class="p-6">
+              <h3
+                class="text-xl font-bold font-sans mb-2 group-hover:text-brand-orange transition-colors"
+              >
+                Auto Tracking Productivity Weekly
+              </h3>
+              <p class="text-gray-500 text-sm line-clamp-2">
+                Tự động cập nhật thời gian năng suất hằng tuần dựa Google
+                Calendar
+              </p>
+              <div
+                class="mt-4 flex items-center text-sm font-semibold text-brand-orange"
+              >
+                VIEW PROJECT
+                <i
+                  class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"
+                ></i>
+              </div>
+            </div>
+          </a>
+
+          <!-- Project 4: (In development) -->
+          <a
+            href="#"
+            target="_blank"
+            class="block group border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white"
+          >
+            <div class="relative overflow-hidden aspect-[16/10] bg-gray-100">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeF9rP9yAHHBL-8DzQySO7yH9Ms4MtYFKOfw&s"
+                alt="Project (In development)"
+                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+
+            <div class="p-6">
+              <h3
+                class="text-xl font-bold font-sans mb-2 group-hover:text-brand-orange transition-colors"
+              >
+                Dự án (đang phát triển thêm)
+              </h3>
+
+              <p class="text-gray-500 text-sm line-clamp-2">
+                Hiện mình đang tiếp tục xây dựng và hoàn thiện dự án này. Sẽ cập
+                nhật demo & tài liệu sớm.
+              </p>
+
+              <div
+                class="mt-4 flex items-center text-sm font-semibold text-brand-orange"
+              >
+                COMING SOON
+                <i class="fas fa-hourglass-half ml-2"></i>
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Spacer -->
+    <div
+      class="h-20 border-t border-gray-100 mt-10 flex items-center justify-center text-gray-400 text-sm"
+    >
+      &copy; 2025 My Portfolio. All rights reserved.
+    </div>
+
+    <script>
+      // Scroll reveal script
+      document.addEventListener("DOMContentLoaded", () => {
+        const reveals = document.querySelectorAll(".reveal-section");
+
+        const revealOnScroll = () => {
+          const windowHeight = window.innerHeight;
+          const elementVisible = 100;
+
+          reveals.forEach((reveal) => {
+            const elementTop = reveal.getBoundingClientRect().top;
+            if (elementTop < windowHeight - elementVisible) {
+              reveal.classList.add("active");
+            }
+          });
+        };
+
+        window.addEventListener("scroll", revealOnScroll);
+        revealOnScroll(); // Trigger once on load
+      });
+    </script>
+  </body>
+</html>
